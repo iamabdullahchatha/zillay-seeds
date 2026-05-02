@@ -1,0 +1,706 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --seed-green: 84 174 111;
+  --deep-leaf-green: 23 58 37;
+  --soil-brown: 71 45 34;
+  --cream-background: 247 240 227;
+  --tomato-red: 217 75 61;
+  --pepper-orange: 208 122 33;
+  --watermelon-pink: 225 104 125;
+  --soft-border-color: 221 231 219;
+  --page-highlight: 255 253 248;
+  --page-wash: 238 248 239;
+  --ink-green: 12 42 27;
+  --packet-paper: 255 250 239;
+  --field-line: 174 192 151;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    linear-gradient(105deg, rgb(var(--deep-leaf-green) / 0.035) 0 1px, transparent 1px 26px),
+    repeating-linear-gradient(168deg, rgb(var(--field-line) / 0.12) 0 1px, transparent 1px 36px),
+    radial-gradient(ellipse at top left, rgb(var(--seed-green) / 0.14), transparent 28%),
+    radial-gradient(ellipse at top right, rgb(var(--tomato-red) / 0.12), transparent 24%),
+    radial-gradient(ellipse at 50% 100%, rgb(var(--watermelon-pink) / 0.08), transparent 30%),
+    linear-gradient(
+      180deg,
+      rgb(var(--page-highlight)) 0%,
+      rgb(var(--cream-background)) 100%
+    );
+  color: rgb(var(--soil-brown));
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  background-image:
+    radial-gradient(rgb(var(--soil-brown) / 0.12) 0.6px, transparent 0.6px),
+    radial-gradient(rgb(var(--deep-leaf-green) / 0.08) 0.5px, transparent 0.5px);
+  background-position: 0 0, 14px 14px;
+  background-size: 28px 28px;
+  mix-blend-mode: multiply;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  background:
+    repeating-radial-gradient(
+      ellipse at 8% 42%,
+      transparent 0 20px,
+      rgb(var(--deep-leaf-green) / 0.08) 21px 22px,
+      transparent 23px 44px
+    ),
+    repeating-radial-gradient(
+      ellipse at 92% 8%,
+      transparent 0 24px,
+      rgb(var(--pepper-orange) / 0.07) 25px 26px,
+      transparent 27px 56px
+    );
+  mix-blend-mode: multiply;
+}
+
+::selection {
+  background: rgb(var(--seed-green) / 0.24);
+  color: rgb(var(--deep-leaf-green));
+}
+
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+  font-variant-ligatures: common-ligatures;
+}
+
+.section-shell {
+  @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+.rhythm-stack {
+  @apply space-y-12 sm:space-y-14 lg:space-y-16;
+}
+
+.section-transition {
+  position: relative;
+}
+
+.section-transition::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: -2.1rem;
+  height: 4.2rem;
+  pointer-events: none;
+  opacity: 0.62;
+  background:
+    linear-gradient(110deg, transparent 0 8%, rgb(var(--seed-green) / 0.14) 8.2% 34%, transparent 34.4% 100%),
+    repeating-radial-gradient(
+      ellipse at 50% 100%,
+      transparent 0 17px,
+      rgb(var(--deep-leaf-green) / 0.16) 18px 19px,
+      transparent 20px 38px
+    );
+  mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+  z-index: -1;
+}
+
+.diagonal-section {
+  clip-path: polygon(0 1.35rem, 100% 0, 100% calc(100% - 1.35rem), 0 100%);
+}
+
+.dense-glass-card {
+  @apply relative overflow-hidden rounded-[1.55rem] border border-brand-border p-4 shadow-soft backdrop-blur sm:p-5;
+  background-color: rgb(255 255 255 / 0.88);
+}
+
+.dense-glass-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.44;
+  background:
+    radial-gradient(circle at 14% 18%, rgb(var(--seed-green) / 0.12), transparent 22%),
+    radial-gradient(circle at 92% 4%, rgb(var(--pepper-orange) / 0.1), transparent 20%);
+}
+
+.field-panel {
+  @apply relative overflow-hidden rounded-[2.25rem] border border-white/60 bg-white/70 shadow-soft backdrop-blur;
+}
+
+.field-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  background:
+    radial-gradient(circle at 12% 15%, rgb(var(--tomato-red) / 0.15), transparent 22%),
+    radial-gradient(circle at 86% 8%, rgb(var(--seed-green) / 0.16), transparent 20%),
+    linear-gradient(
+      115deg,
+      rgb(var(--deep-leaf-green) / 0.05) 0,
+      rgb(var(--deep-leaf-green) / 0.01) 100%
+    );
+  pointer-events: none;
+}
+
+.soil-tag {
+  @apply inline-flex items-center rounded-full border border-soil-200 bg-soil-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-soil-700;
+}
+
+.editorial-kicker {
+  @apply inline-flex items-center gap-2 rounded-full border border-brand-border bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-brand-leaf shadow-soft;
+}
+
+.editorial-kicker::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px 999px 999px 0;
+  background: rgb(var(--seed-green));
+  transform: rotate(-35deg);
+  box-shadow: 0 0 0 5px rgb(var(--seed-green) / 0.14);
+}
+
+.leaf-badge {
+  @apply inline-flex items-center gap-2 rounded-full border border-leaf-100 bg-leaf-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-leaf-700;
+}
+
+.organic-card {
+  @apply relative overflow-hidden rounded-[2rem] border border-brand-border bg-white/90 shadow-soft backdrop-blur;
+}
+
+.organic-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.72;
+  background:
+    radial-gradient(circle at 12% 10%, rgb(var(--seed-green) / 0.13), transparent 22%),
+    radial-gradient(circle at 88% 0%, rgb(var(--tomato-red) / 0.1), transparent 20%),
+    linear-gradient(180deg, rgb(255 255 255 / 0.62), rgb(255 255 255 / 0));
+}
+
+.seed-packet-card {
+  @apply relative overflow-hidden rounded-[2.15rem] border border-brand-border bg-white/95 shadow-soft;
+  background:
+    linear-gradient(180deg, rgb(var(--packet-paper)) 0%, rgb(255 255 255 / 0.92) 100%),
+    repeating-linear-gradient(90deg, rgb(var(--deep-leaf-green) / 0.04) 0 1px, transparent 1px 22px);
+}
+
+.seed-packet-card::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 0.72rem;
+  background:
+    linear-gradient(90deg, rgb(var(--tomato-red)), rgb(var(--pepper-orange)) 34%, rgb(var(--seed-green)) 68%, rgb(var(--watermelon-pink)));
+  opacity: 0.92;
+  z-index: 2;
+}
+
+.seed-packet-card::after {
+  content: "";
+  position: absolute;
+  inset-inline: 1.1rem;
+  bottom: 0.9rem;
+  height: 3rem;
+  pointer-events: none;
+  opacity: 0.18;
+  background:
+    repeating-radial-gradient(
+      ellipse at 50% 100%,
+      transparent 0 10px,
+      rgb(var(--deep-leaf-green)) 11px 12px,
+      transparent 13px 22px
+    );
+  mask-image: linear-gradient(180deg, transparent, black 35%, transparent);
+}
+
+.packet-image-rail {
+  @apply relative overflow-hidden bg-cream px-4 pb-3 pt-5 sm:px-5 sm:pb-4 sm:pt-6;
+}
+
+.packet-image-rail::before {
+  content: "";
+  position: absolute;
+  inset: 0.85rem;
+  border-radius: 1.65rem;
+  border: 1px dashed rgb(var(--deep-leaf-green) / 0.14);
+  pointer-events: none;
+}
+
+.packet-code {
+  @apply absolute right-5 top-5 z-10 rounded-full border border-white/70 bg-white/85 px-3 py-1 text-[0.66rem] font-semibold uppercase tracking-[0.24em] text-brand-leaf shadow-soft;
+}
+
+.image-stage {
+  @apply relative overflow-hidden rounded-[1.75rem] border border-white/70 bg-[#f9f4ea];
+}
+
+.image-stage::before {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 18%, rgb(var(--seed-green) / 0.24), transparent 22%),
+    radial-gradient(circle at 86% 10%, rgb(var(--tomato-red) / 0.16), transparent 20%),
+    radial-gradient(circle at 60% 95%, rgb(var(--watermelon-pink) / 0.14), transparent 24%);
+}
+
+.contour-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.contour-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.52;
+  background:
+    repeating-radial-gradient(
+      ellipse at 16% 86%,
+      transparent 0 18px,
+      rgb(var(--deep-leaf-green) / 0.12) 19px 20px,
+      transparent 21px 38px
+    ),
+    repeating-radial-gradient(
+      ellipse at 92% 14%,
+      transparent 0 21px,
+      rgb(var(--pepper-orange) / 0.1) 22px 23px,
+      transparent 24px 48px
+    );
+}
+
+.hero-orchard {
+  position: relative;
+}
+
+.hero-orchard::after {
+  content: "";
+  position: absolute;
+  inset-inline: 3%;
+  bottom: -1px;
+  height: 7rem;
+  pointer-events: none;
+  opacity: 0.38;
+  background:
+    repeating-radial-gradient(
+      ellipse at 50% 100%,
+      transparent 0 18px,
+      rgb(var(--deep-leaf-green) / 0.28) 19px 20px,
+      transparent 21px 40px
+    );
+  mask-image: linear-gradient(180deg, transparent, black 45%, black);
+}
+
+.vegetable-shape {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  z-index: 3;
+  filter: drop-shadow(0 16px 18px rgb(var(--soil-brown) / 0.13));
+}
+
+.vegetable-shape.tomato {
+  width: 4.2rem;
+  height: 4.2rem;
+  border-radius: 52% 48% 56% 44%;
+  background: rgb(var(--tomato-red));
+}
+
+.vegetable-shape.tomato::before {
+  content: "";
+  position: absolute;
+  left: 35%;
+  top: -0.45rem;
+  width: 1.6rem;
+  height: 1rem;
+  border-radius: 0.8rem 0.8rem 0.2rem 0.2rem;
+  background: rgb(var(--deep-leaf-green));
+  transform: rotate(-12deg);
+}
+
+.vegetable-shape.pepper {
+  width: 2.8rem;
+  height: 6.1rem;
+  border-radius: 62% 38% 58% 42% / 42% 48% 52% 58%;
+  background: rgb(var(--pepper-orange));
+  transform: rotate(16deg);
+}
+
+.vegetable-shape.watermelon {
+  width: 6.4rem;
+  height: 3.2rem;
+  border-radius: 999px 999px 1.2rem 1.2rem;
+  background:
+    linear-gradient(180deg, rgb(var(--watermelon-pink)) 0 62%, rgb(var(--deep-leaf-green)) 62% 73%, rgb(var(--seed-green)) 73%);
+}
+
+.vegetable-shape.leaf {
+  width: 4.6rem;
+  height: 2.6rem;
+  border-radius: 4rem 0;
+  background: rgb(var(--seed-green));
+  transform: rotate(-18deg);
+}
+
+.vegetable-shape.leaf::after {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto 14%;
+  height: 1px;
+  background: rgb(255 255 255 / 0.45);
+  transform: rotate(-11deg);
+}
+
+.field-stitch {
+  height: 0.42rem;
+  border-radius: 999px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgb(var(--deep-leaf-green) / 0.22) 0 10px,
+      transparent 10px 18px,
+      rgb(var(--tomato-red) / 0.2) 18px 28px,
+      transparent 28px 36px
+    );
+}
+
+.image-stage > img {
+  z-index: 1;
+}
+
+.product-image-stage {
+  @apply relative aspect-[4/4.2] overflow-hidden rounded-[1.75rem] border border-white/70 bg-[#f9f4ea];
+}
+
+.product-photo-stage {
+  @apply relative aspect-[4/3.25] overflow-hidden rounded-[1.75rem] border border-white/70 bg-[#f9f4ea];
+}
+
+.product-image-stage::before,
+.product-photo-stage::before {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 18%, rgb(var(--seed-green) / 0.24), transparent 22%),
+    radial-gradient(circle at 86% 10%, rgb(var(--tomato-red) / 0.16), transparent 20%),
+    radial-gradient(circle at 60% 95%, rgb(var(--watermelon-pink) / 0.14), transparent 24%);
+}
+
+.product-image-stage > img,
+.product-photo-stage > img {
+  z-index: 1;
+}
+
+.field-divider {
+  height: 1px;
+  background:
+    linear-gradient(90deg, transparent, rgb(var(--deep-leaf-green) / 0.18), transparent),
+    repeating-linear-gradient(
+      90deg,
+      rgb(var(--seed-green) / 0.22) 0,
+      rgb(var(--seed-green) / 0.22) 6px,
+      transparent 6px,
+      transparent 14px
+    );
+}
+
+.section-divider-organic {
+  position: relative;
+  height: 3.35rem;
+  overflow: hidden;
+}
+
+.section-divider-organic::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.42;
+  background:
+    repeating-radial-gradient(
+      ellipse at 50% 100%,
+      transparent 0 18px,
+      rgb(var(--deep-leaf-green) / 0.24) 19px 20px,
+      transparent 21px 42px
+    );
+  mask-image: linear-gradient(90deg, transparent, black 18%, black 82%, transparent);
+}
+
+.premium-button {
+  @apply focus-ring relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-full bg-brand-leaf px-6 text-sm font-semibold text-white shadow-soft transition duration-300;
+}
+
+.premium-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(110deg, transparent 0 32%, rgb(255 255 255 / 0.2) 46%, transparent 58%);
+  transform: translateX(-120%);
+  transition: transform 650ms ease;
+}
+
+.premium-button:hover {
+  background-color: rgb(var(--ink-green));
+  transform: translateY(-1px);
+  box-shadow: 0 22px 55px rgb(var(--deep-leaf-green) / 0.22);
+}
+
+.premium-button:hover::after {
+  transform: translateX(120%);
+}
+
+.premium-button-outline {
+  @apply focus-ring inline-flex h-12 items-center justify-center rounded-full border border-brand-border bg-white/85 px-6 text-sm font-semibold text-brand-leaf shadow-soft transition duration-300;
+}
+
+.premium-button-outline:hover {
+  background: rgb(var(--cream-background));
+  transform: translateY(-1px);
+  box-shadow: 0 18px 42px rgb(var(--soil-brown) / 0.12);
+}
+
+.premium-cta {
+  @apply relative overflow-hidden rounded-[2.5rem] border border-brand-border text-white shadow-field;
+  background-color: rgb(var(--deep-leaf-green));
+}
+
+.premium-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 16% 15%, rgb(var(--seed-green) / 0.22), transparent 18%),
+    radial-gradient(circle at 84% 18%, rgb(var(--watermelon-pink) / 0.18), transparent 18%),
+    linear-gradient(180deg, rgb(255 255 255 / 0.04), transparent 40%);
+}
+
+.premium-cta::after {
+  content: "";
+  position: absolute;
+  inset-inline: 4%;
+  bottom: -1.2rem;
+  height: 6rem;
+  pointer-events: none;
+  opacity: 0.16;
+  background:
+    repeating-radial-gradient(
+      ellipse at 50% 100%,
+      transparent 0 16px,
+      white 17px 18px,
+      transparent 19px 36px
+    );
+}
+
+.hero-banner-stack {
+  @apply relative min-h-[25rem] overflow-hidden rounded-[2rem] border border-brand-border bg-soil-100;
+}
+
+.hero-banner-stack::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 56%, rgb(var(--deep-leaf-green) / 0.16)),
+    radial-gradient(circle at 18% 12%, rgb(255 255 255 / 0.22), transparent 18%);
+}
+
+.hero-banner-stack::before {
+  content: "";
+  position: absolute;
+  inset: 0.9rem;
+  z-index: 2;
+  pointer-events: none;
+  border: 1px solid rgb(255 255 255 / 0.54);
+  border-radius: 1.45rem;
+  box-shadow: inset 0 0 0 999px rgb(23 58 37 / 0.02);
+}
+
+.hero-lines {
+  background-image:
+    repeating-radial-gradient(
+      circle at 20% 100%,
+      rgb(var(--seed-green) / 0.1) 0,
+      rgb(var(--seed-green) / 0.1) 1px,
+      transparent 1px,
+      transparent 18px
+    ),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.56));
+}
+
+.seed-pattern {
+  background-image:
+    radial-gradient(ellipse at center, rgb(242 223 177 / 0.75) 0, rgb(242 223 177 / 0.75) 35%, transparent 36%),
+    radial-gradient(ellipse at center, rgb(var(--seed-green) / 0.14) 0, rgb(var(--seed-green) / 0.14) 35%, transparent 36%);
+  background-position: 0 0, 16px 16px;
+  background-size: 32px 32px;
+}
+
+.seed-field-pattern {
+  background-image:
+    radial-gradient(rgb(var(--seed-green) / 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--deep-leaf-green) / 0.08) 1px, transparent 1px);
+  background-position: 0 0, 12px 12px;
+  background-size: 24px 24px, 48px 48px;
+}
+
+.motion-field-lines {
+  animation: field-line-drift 18s ease-in-out infinite alternate;
+}
+
+.motion-float-slow {
+  animation: organic-float 8s ease-in-out infinite;
+}
+
+.premium-hover-card {
+  transform: translateZ(0);
+  transition:
+    transform 320ms ease,
+    box-shadow 320ms ease,
+    border-color 320ms ease;
+}
+
+.premium-hover-card:hover,
+.premium-hover-card:focus-within {
+  transform: translateY(-0.35rem);
+  border-color: rgb(var(--seed-green) / 0.45);
+  box-shadow: 0 26px 68px rgb(var(--soil-brown) / 0.18);
+}
+
+@keyframes field-line-drift {
+  0% {
+    background-position: 0 0, 12px 12px;
+  }
+  100% {
+    background-position: 22px 14px, 34px 22px;
+  }
+}
+
+@keyframes organic-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(var(--float-rotation, 0deg));
+  }
+  50% {
+    transform: translate3d(0, -0.45rem, 0) rotate(var(--float-rotation, 0deg));
+  }
+}
+
+.footer-field {
+  background:
+    radial-gradient(ellipse at 12% 20%, rgb(var(--watermelon-pink) / 0.16), transparent 22%),
+    radial-gradient(ellipse at 84% 0%, rgb(var(--seed-green) / 0.2), transparent 20%),
+    repeating-radial-gradient(
+      ellipse at 50% 100%,
+      transparent 0 24px,
+      rgb(255 255 255 / 0.06) 25px 26px,
+      transparent 27px 52px
+    ),
+    rgb(var(--deep-leaf-green));
+}
+
+.footer-seed-card {
+  @apply relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-5 shadow-field;
+}
+
+.footer-seed-card::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 0.55rem;
+  background:
+    linear-gradient(90deg, rgb(var(--tomato-red)), rgb(var(--pepper-orange)), rgb(var(--seed-green)));
+}
+
+.surface-cream {
+  background-color: rgb(var(--cream-background));
+}
+
+.border-soft {
+  border-color: rgb(var(--soft-border-color));
+}
+
+a,
+button,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid rgb(var(--seed-green) / 0.65);
+  outline-offset: 3px;
+}
+
+.focus-ring {
+  @apply focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-seed/25 focus-visible:ring-offset-2 focus-visible:ring-offset-cream;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .section-transition::before {
+    top: -1.5rem;
+    height: 3rem;
+  }
+
+  .diagonal-section {
+    clip-path: polygon(0 0.8rem, 100% 0, 100% calc(100% - 0.8rem), 0 100%);
+  }
+
+  .hero-banner-stack {
+    min-height: 17rem;
+  }
+
+  .vegetable-shape.tomato {
+    width: 3.1rem;
+    height: 3.1rem;
+  }
+
+  .vegetable-shape.pepper {
+    width: 2.1rem;
+    height: 4.7rem;
+  }
+
+  .vegetable-shape.watermelon {
+    width: 4.8rem;
+    height: 2.5rem;
+  }
+}
