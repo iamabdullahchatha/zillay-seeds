@@ -10,7 +10,6 @@ import {
   ArrowLeft,
   ArrowRight,
   ExternalLink,
-  MapPinned,
   PhoneCall,
   Sprout,
 } from "lucide-react";

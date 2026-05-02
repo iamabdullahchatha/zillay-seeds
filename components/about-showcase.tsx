@@ -22,7 +22,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, type ReactNode } from "react";
 
-import { AnimatedItem, AnimatedSection } from "@/components/animated-section";
+import { AnimatedSection } from "@/components/animated-section";
 import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
