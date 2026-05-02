@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
+
 import { absoluteUrl } from "@/lib/utils";
+
+const facebookUrl = "https://www.facebook.com/zillayseeds/";
+const mapsUrl = "https://share.google/fWuMkhE7DZi2ZDUyb";
 
 export const siteConfig = {
   name: "Zillay Seeds Pvt Ltd",
   shortName: "Zillay Seeds",
+  domain: "www.zillayseeds.com",
   description:
     "Zillay Seeds Pvt Ltd is a vegetable seed supplier in Gujranwala, Pakistan offering hybrid and OPV seeds for growers, farmers, and vegetable seed buyers.",
   addressLines: [
@@ -11,13 +17,34 @@ export const siteConfig = {
   ],
   streetAddress: "24-Bajwa Road, Opposite Taqwa Marble, Link G.T Road",
   locality: "Gujranwala",
+  region: "Punjab",
+  geoRegion: "PK-PB",
+  geoPlacename: "Gujranwala, Punjab, Pakistan",
   countryName: "Pakistan",
   countryCode: "PK",
   phoneDisplay: "+92-300-7440224",
   phoneHref: "tel:+923007440224",
-  facebookUrl: "https://www.facebook.com/zillayseeds/",
-  mapsUrl: "https://share.google/fWuMkhE7DZi2ZDUyb",
+  facebookUrl,
+  mapsUrl,
+  sameAs: [facebookUrl],
   emailFallback: "sales@zillayseeds.com",
+  language: "en-PK",
+  locale: "en_PK",
+  lastModified: "2026-05-02",
+  businessCategory: "Vegetable seed supplier",
+  seedCategories: [
+    "Tomato Seeds",
+    "Pepper Seeds",
+    "Cucurbit Seeds",
+    "Root Vegetable Seeds",
+    "Leafy Vegetable Seeds",
+    "Herb Seeds",
+    "Pea Seeds",
+    "Cole Crop Seeds",
+    "Bulb Vegetable Seeds",
+    "Brinjal Seeds",
+  ],
+  areaServed: ["Gujranwala", "Punjab", "Pakistan"],
   keywords: [
     "Zillay Seeds",
     "Zillay Seeds Pvt Ltd",
@@ -49,6 +76,18 @@ export function getPageTitle(title?: string) {
   return title ? `${title} | ${siteConfig.shortName}` : siteConfig.name;
 }
 
+export const indexableRobots: Metadata["robots"] = {
+  index: true,
+  follow: true,
+  googleBot: {
+    index: true,
+    follow: true,
+    "max-image-preview": "large",
+    "max-snippet": -1,
+    "max-video-preview": -1,
+  },
+};
+
 export function getMetadata({
   title,
   description,
@@ -71,8 +110,19 @@ export function getMetadata({
     title: resolvedTitle,
     description: resolvedDescription,
     keywords,
+    applicationName: siteConfig.shortName,
+    authors: [{ name: siteConfig.name, url: siteConfig.siteUrl }],
+    creator: siteConfig.name,
+    publisher: siteConfig.name,
+    category: "Agriculture",
+    classification: "Vegetable seeds and hybrid seed supplier",
+    robots: indexableRobots,
     alternates: {
       canonical: url,
+      languages: {
+        [siteConfig.language]: url,
+        "x-default": url,
+      },
     },
     openGraph: {
       title: resolvedTitle,
@@ -87,7 +137,7 @@ export function getMetadata({
           alt: siteConfig.name,
         },
       ],
-      locale: "en_PK",
+      locale: siteConfig.locale,
       type: "website" as const,
     },
     twitter: {
@@ -96,5 +146,13 @@ export function getMetadata({
       description: resolvedDescription,
       images: [imageUrl],
     },
-  };
+    other: {
+      "geo.region": siteConfig.geoRegion,
+      "geo.placename": siteConfig.geoPlacename,
+      "geo.country": siteConfig.countryCode,
+      "business:contact_data:locality": siteConfig.locality,
+      "business:contact_data:region": siteConfig.region,
+      "business:contact_data:country_name": siteConfig.countryName,
+    },
+  } satisfies Metadata;
 }

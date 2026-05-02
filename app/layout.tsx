@@ -4,7 +4,8 @@ import { Cormorant_Garamond, Source_Sans_3 } from "next/font/google";
 import { PageTransition } from "@/components/page-transition";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { siteConfig } from "@/lib/site";
+import { getAllProducts } from "@/lib/products";
+import { indexableRobots, siteConfig } from "@/lib/site";
 import { absoluteUrl } from "@/lib/utils";
 
 import "./globals.css";
@@ -27,17 +28,25 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   applicationName: siteConfig.shortName,
   keywords: siteConfig.keywords,
+  authors: [{ name: siteConfig.name, url: siteConfig.siteUrl }],
   creator: siteConfig.name,
   publisher: siteConfig.name,
+  category: "Agriculture",
+  classification: "Vegetable seeds and hybrid seed supplier",
+  robots: indexableRobots,
   alternates: {
     canonical: siteConfig.siteUrl,
+    languages: {
+      [siteConfig.language]: siteConfig.siteUrl,
+      "x-default": siteConfig.siteUrl,
+    },
   },
   openGraph: {
     title: siteConfig.name,
     description: siteConfig.description,
     url: siteConfig.siteUrl,
     siteName: siteConfig.name,
-    locale: "en_PK",
+    locale: siteConfig.locale,
     type: "website",
     images: [
       {
@@ -58,6 +67,14 @@ export const metadata: Metadata = {
     icon: "/images/brand/cropped-zillay-seeds-icon.webp",
     apple: "/images/brand/cropped-zillay-seeds-icon.webp",
   },
+  other: {
+    "geo.region": siteConfig.geoRegion,
+    "geo.placename": siteConfig.geoPlacename,
+    "geo.country": siteConfig.countryCode,
+    "business:contact_data:locality": siteConfig.locality,
+    "business:contact_data:region": siteConfig.region,
+    "business:contact_data:country_name": siteConfig.countryName,
+  },
 };
 
 export default function RootLayout({
@@ -65,6 +82,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const offerCatalogJsonLd = {
+    "@type": "OfferCatalog",
+    name: `${siteConfig.shortName} vegetable seed catalog`,
+    itemListElement: siteConfig.seedCategories.map((category) => ({
+      "@type": "OfferCatalog",
+      name: category,
+    })),
+  };
+
   const organizationJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -77,17 +103,20 @@ export default function RootLayout({
       url: absoluteUrl("/images/brand/zillay-seeds-logo.webp"),
     },
     image: absoluteUrl(siteConfig.defaultOgImage),
+    email: siteConfig.emailFallback,
+    telephone: siteConfig.phoneDisplay,
     address: {
       "@type": "PostalAddress",
       streetAddress: siteConfig.streetAddress,
       addressLocality: siteConfig.locality,
+      addressRegion: siteConfig.region,
       addressCountry: siteConfig.countryCode,
     },
-    areaServed: {
-      "@type": "Country",
-      name: siteConfig.countryName,
-    },
-    sameAs: [siteConfig.facebookUrl],
+    areaServed: siteConfig.areaServed.map((name) => ({
+      "@type": name === siteConfig.countryName ? "Country" : "Place",
+      name,
+    })),
+    sameAs: siteConfig.sameAs,
     knowsAbout: [
       "hybrid vegetable seeds",
       "vegetable seeds in Gujranwala",
@@ -96,6 +125,7 @@ export default function RootLayout({
       "watermelon seeds",
       "cucumber seeds",
     ],
+    hasOfferCatalog: offerCatalogJsonLd,
     contactPoint: [
       {
         "@type": "ContactPoint",
@@ -115,16 +145,19 @@ export default function RootLayout({
     image: absoluteUrl("/images/brand/zillay-seeds-banner-vegetable-seeds-pakistan.jpg"),
     url: siteConfig.siteUrl,
     telephone: siteConfig.phoneDisplay,
+    email: siteConfig.emailFallback,
+    priceRange: "$$",
     address: {
       "@type": "PostalAddress",
       streetAddress: siteConfig.streetAddress,
       addressLocality: siteConfig.locality,
+      addressRegion: siteConfig.region,
       addressCountry: siteConfig.countryCode,
     },
-    areaServed: {
-      "@type": "Country",
-      name: siteConfig.countryName,
-    },
+    areaServed: siteConfig.areaServed.map((name) => ({
+      "@type": name === siteConfig.countryName ? "Country" : "Place",
+      name,
+    })),
     location: {
       "@type": "Place",
       name: `${siteConfig.name} HQ`,
@@ -132,15 +165,33 @@ export default function RootLayout({
         "@type": "PostalAddress",
         streetAddress: siteConfig.streetAddress,
         addressLocality: siteConfig.locality,
+        addressRegion: siteConfig.region,
         addressCountry: siteConfig.countryCode,
       },
     },
-    sameAs: [siteConfig.facebookUrl],
+    sameAs: siteConfig.sameAs,
     hasMap: siteConfig.mapsUrl,
+    hasOfferCatalog: offerCatalogJsonLd,
+    makesOffer: getAllProducts().slice(0, 8).map((product) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Product",
+        name: product.name,
+        category: product.category,
+        url: absoluteUrl(`/products/${product.slug}`),
+      },
+      seller: {
+        "@id": absoluteUrl("/#organization"),
+      },
+      areaServed: {
+        "@type": "Country",
+        name: siteConfig.countryName,
+      },
+    })),
   };
 
   return (
-    <html lang="en">
+    <html lang={siteConfig.language}>
       <body
         className={`${headingFont.variable} ${bodyFont.variable} font-[var(--font-body)] text-soil-900 antialiased`}
       >
